@@ -12,6 +12,14 @@
         nums.forEach((item)=>{
             console.log(item);
         });
+        // nums 배열 안에 저장된 값을 활용해서 새로운 배열을 만들어 준다.
+        const newNums1=nums.map((item)=>{
+            // 여기서 리턴 값으로 새로운 배열이 만들어 진다.
+            return item*2;
+        });
+        const newNums2=nums.map((item)=>{
+            return item-2;
+        });
     </script>
 </body>
 </html>
