@@ -6,38 +6,36 @@
     <title>Step14_promise.html</title>
 </head>
 <body>
+    <h3>이미지를 선택하세요</h3>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+    <div id="preview"></div>
     <script>
-        // 기상하는 함수
-        function wakeUp(callback){
-            // 기상을 완료한 후에 
-            // callback 함수를 호출한다.
-            setTimeout(()=>{
-            console.log("1. 기상 완료");
-            callback();}, 1000);
-        }
+        // image 파일을 선택했을 때 실행할 함수 등록
+        document.querySelector("#fileInput").addEventListener("change", (e)=>{
+            // e.target 은 "change" 이벤트가 발생한 바로 그 요소의 참조값  document.querySelector("#fileInput") 과 같은 값을 가리킨다.
+            // 선택된 파일 객체가 들어있는 배열
+            
+            // const files=document.querySelector("#fileInput").files 와 같다.
+            const files = e.target.files;
+            // FileReader 객체를 이용해서 선택한 파일 data를 읽어들인다.
+            const reader=new FileReader();
+            // files 배열의 0번방에 들어있는 파일을 dataURL 형식으로 읽어들이고
+            reader.readAsDataURL(files[0]);
+            // 다 읽었을 때 실행할 함수 등록
+            reader.onload =()=>{
+                // 읽은 DataURL 형식의 문자열을 콘솔창에 출력하기
+                console.log(reader.result); 
+                // 이 부분은 비동기 동작으로 나중에 다 읽으면 콘솔에 나타단다.
 
-        // 밥 먹는 함수
-        function eatBreakfast(){
+                // backtic 을 이용해 html 형식의 문자열을 구성하고
+                const img=`<img src="${reader.result}">`;
+                // id 가 preview 인 곳에 html 로 해석이 되도록 끼워 넣는다
+                document.querySelector("#preview").insertAdjacentHTML("beforeend", img);
+                // HTML로 해야 이미지로 나오고, Text로 하면 텍스트를 출력한다.
+            };
+            console.log("FileReader 객체를 이용해 읽기 시작 !") // 파일을 선택하자마자 호출이 되머 먼저 호출
 
-        }
-        
-        // 학교 가는 함수 
-        function goToSchool(){
 
-        }
-
-        // 순서대로 해야 한다.
-        /*wakeUp();
-        eatBreakfast();
-        goToSchool();*/
-        // 자바스크립트 특성상 비동기 동작이 많다. 
-        // 반드시 동작이 끝나고 해야 하는 경우에도
-        // 최대 빠르기로 위에서부터 다 호출하는 경우가 많다. 호출은 순서대로 하더라도 끝나는 순서를 보장할 순 없다. 
-        // 순서를 보장 하려면 동작이 끝나고 호출해야 한다. 
-
-        // --->>>
-        wakeUp(()=>{
-            eatBreakfast();
         });
     </script>
 </body>
